@@ -9,6 +9,9 @@ fun main() {
     println(maxBy(2, 3))
     checkNum(80)
     forAndWhile()
+    nullcheck()
+    ignoreNulls("hihi")
+
 
 }
 
@@ -78,6 +81,10 @@ fun forAndWhile() {
 
     }
 
+    for((index, name) in students.withIndex()) {
+        println("${index+1}번째 학생 : ${name}")
+    }
+
     var sum = 0;
     for (i in 1..10 step 2) {
         sum += i
@@ -90,4 +97,50 @@ fun forAndWhile() {
         // 1부터 99까지 돌림 1..100 은 1부터 100까지
     }
     println(sum)
+
+    var index = 0;
+    while(index < 10) {
+        println("current index : ${index}")
+        index++;
+
+    }
+}
+
+// Nullable NonNull
+fun nullcheck() {
+    // 컴파일 시점이 아닌 runtime에서만 잡히는 nullpointer exception을 보완하기 위함
+    var name : String = "eun"
+
+    // ? 넣으면 널값이 들어갈 수 있음 (타입 명시 필요)
+    var nullName : String? = null;
+
+    var nameInUpperCase = name.toUpperCase()
+
+    // null이면 대문자로 만들고 아니면 널 반환
+    var nullNameInUpperCase = nullName?.toUpperCase()
+
+    println("$nameInUpperCase $nullNameInUpperCase")
+
+    // ?: 엘비스 프레슬리 연산자 호호홍 (약간 삼항연산자 느낌)
+    var lastName : String? = null;
+    var fullName = name +" "+ (lastName?: "No lastName")
+    println(fullName)
+
+}
+
+fun ignoreNulls(str : String?) {
+    // !! 타입이 nullable 이지만 null이 아닐 때 느낌표 두개 씀
+    // 절대 str엔 널이 들어올리 없다고 미리 알림 (null 들어오면 널포인트익셉션 뜸)
+    val mNotNull : String = str!!
+    val upper = mNotNull.toUpperCase()
+
+    val email : String? = "eeun95@gmail.com"
+    email?.let {
+        // email이 null이 아니면 실행
+        // let 함수는 자신의 리시버 객체를 람다식 내부로 옮겨서 실행하는 구문
+        println("my email is ${it}")
+
+    }
+
+
 }
